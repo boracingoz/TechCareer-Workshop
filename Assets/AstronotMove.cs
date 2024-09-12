@@ -5,16 +5,19 @@ using UnityEngine;
 public class AstronotMove : MonoBehaviour
 {
     [SerializeField] int maxSpeed;
-    // Start is called before the first frame update
+    public int crystal;
+
+    [SerializeField] int health = 100;
+    [SerializeField] int maxHealth = 100;
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -22,19 +25,38 @@ public class AstronotMove : MonoBehaviour
         float hori = Input.GetAxis("Horizontal");
         transform.position += new Vector3(hori, 0, 0) * maxSpeed * Time.deltaTime;
         float vert = Input.GetAxis("Vertical");
-        transform.position += new Vector3(0,vert,0) * maxSpeed * Time.deltaTime;
-        //Debug.Log("yatay");
+        transform.position += new Vector3(0, vert, 0) * maxSpeed * Time.deltaTime;
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    Debug.Log("Çarpýsþma gerçekleþti!");
-    //}
-
-    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Elmasla temase geçildi!");
+        if (collision.tag == "Crystal")
+        {
+            crystal++;
+            if (health < maxHealth) 
+            {
+                health += 1;
+                if (health > maxHealth) 
+                {
+                    health = maxHealth;
+                }
+            }
+            Debug.Log("Kristal sayýsý: " + crystal + " Saðlýk: " + health);
+            Destroy(collision.gameObject);
+        }
+        
+        else if (collision.tag == "Spike")
+        {
+            if (health > 0) 
+            {
+                health -= 1; 
+                if (health < 0) 
+                {
+                    health = 0;
+                }
+            }
+            Debug.Log("Düþmanla çarpýþtý! Saðlýk: " + health);
+            Destroy(gameObject);
+        }
     }
 }

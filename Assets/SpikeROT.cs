@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carpısma : MonoBehaviour
+public class SpikeROT : MonoBehaviour
 {
+    public float maxRot;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +14,6 @@ public class Carpısma : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Geçilemez!");
+       transform.Rotate(0,0, maxRot * Time.deltaTime);
     }
 }
