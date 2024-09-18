@@ -9,6 +9,7 @@ public class AstronotMove : MonoBehaviour
 
     [SerializeField] int health = 100;
     [SerializeField] int maxHealth = 100;
+    bool isRight;
 
     void Start()
     {
@@ -26,6 +27,15 @@ public class AstronotMove : MonoBehaviour
         transform.position += new Vector3(hori, 0, 0) * maxSpeed * Time.deltaTime;
         float vert = Input.GetAxis("Vertical");
         transform.position += new Vector3(0, vert, 0) * maxSpeed * Time.deltaTime;
+
+        if (hori < 0 &&  isRight == false)
+        {
+            Rotation();
+        }
+        else if (hori > 0 && isRight == true)
+        {
+            Rotation();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,5 +68,11 @@ public class AstronotMove : MonoBehaviour
             Debug.Log("Düþmanla çarpýþtý! Saðlýk: " + health);
             Destroy(gameObject);
         }
+    }
+
+    void Rotation()
+    {
+        isRight = !isRight;
+        transform.Rotate(new Vector3(0,180,0));
     }
 }
